@@ -29,7 +29,6 @@ export const useRPSLS = (): UseRPSLS => {
 
       const data = await response.json();
       setChoices(data);
-      console.log(choices, "data from api");
     } catch (err) {
       setError("Failed to fetch game choices");
       console.error("Error fetching choices:", err);
