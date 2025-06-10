@@ -7,6 +7,7 @@ export const useRPSLS = (): UseRPSLS => {
   const [gameResult, setGameResult] = useState("");
 
   const [choices, setChoices] = useState<Choice[]>([]);
+  const [playerChoice, setPlayerChoice] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>();
 
@@ -14,11 +15,6 @@ export const useRPSLS = (): UseRPSLS => {
     setPlayerScore(0);
     setComputerScore(0);
     setGameResult("");
-  };
-
-  const playGame = () => {
-    console.log("call API in order to get who won");
-    // base on the answer set either computer score or player score
   };
 
   const fetchChoices = useCallback(async () => {
@@ -52,6 +48,38 @@ export const useRPSLS = (): UseRPSLS => {
   useEffect(() => {
     fetchChoices();
   }, [fetchChoices]);
+
+  const playGame = useCallback(
+    async (choiceId: number) => {
+      try {
+        setLoading(true);
+        setError(null);
+        setPlayerChoice(choiceId);
+
+        const response = await fetch("https://codechallenge.boohma.com/play", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ player: choiceId }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setGameResult(result.results);
+      } catch (err) {
+        setError("Failed to play game");
+        console.error("Error playing game:", err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [choices]
+  );
+
   return {
     playerScore,
     computerScore,

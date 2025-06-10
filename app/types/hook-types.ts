@@ -3,7 +3,7 @@ export type UseRPSLS = {
   computerScore: number;
   gameResult: string;
   choices: Choice[];
-  playGame: (choice: string) => void;
+  playGame: (choice: number) => void;
   resetScore: () => void;
   loading?: boolean;
   error?: string | null;
