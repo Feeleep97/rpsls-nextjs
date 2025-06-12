@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
-import { Choice, UseRPSLS } from "../types/hook-types";
+import {
+  Choice,
+  GameResultAPIResponse,
+  GameResultRemaped,
+  UseRPSLS,
+} from "../types/hook-types";
 
 export const useRPSLS = (): UseRPSLS => {
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
-  const [gameResult, setGameResult] = useState("");
+  const [gameResult, setGameResult] = useState<GameResultRemaped | null>(null);
 
   const [choices, setChoices] = useState<Choice[]>([]);
   const [playerChoice, setPlayerChoice] = useState<number>();
@@ -14,7 +19,7 @@ export const useRPSLS = (): UseRPSLS => {
   const resetScore = () => {
     setPlayerScore(0);
     setComputerScore(0);
-    setGameResult("");
+    setGameResult(null);
   };
 
   const fetchChoices = useCallback(async () => {
@@ -48,6 +53,18 @@ export const useRPSLS = (): UseRPSLS => {
     fetchChoices();
   }, [fetchChoices]);
 
+  const getChoiceEmoji = (choiceName: string) => {
+    console.log(choiceName, "choice name");
+    const emojiMap = {
+      rock: "🪨",
+      paper: "📄",
+      scissors: "✂️",
+      lizard: "🦎",
+      spock: "🖖",
+    };
+    return emojiMap[choiceName?.toLowerCase()] || "❓";
+  };
+
   const playGame = useCallback(
     async (choiceId: number) => {
       try {
@@ -67,8 +84,26 @@ export const useRPSLS = (): UseRPSLS => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const result = await response.json();
-        setGameResult(result.results);
+        const result = (await response.json()) as GameResultAPIResponse;
+
+        const playerChoiceName =
+          choices.find((choice) => choice.id === choiceId)?.name || "Unknown";
+        const computerChoiceName =
+          choices.find((choice) => choice.id === result.computer)?.name ||
+          "Unknown";
+
+        const playerEmoji = getChoiceEmoji(playerChoiceName);
+        const computerEmoji = getChoiceEmoji(computerChoiceName);
+
+        const gameData = {
+          ...result,
+          playerChoiceName,
+          computerChoiceName,
+          playerEmoji,
+          computerEmoji,
+        };
+
+        setGameResult(gameData);
       } catch (err) {
         setError("Failed to play game");
         console.error("Error playing game:", err);
@@ -86,5 +121,6 @@ export const useRPSLS = (): UseRPSLS => {
     choices,
     resetScore,
     playGame,
+    refetchChoices: fetchChoices,
   };
 };
