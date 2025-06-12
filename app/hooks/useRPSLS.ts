@@ -12,7 +12,7 @@ export const useRPSLS = (): UseRPSLS => {
   const [gameResult, setGameResult] = useState<GameResultRemaped | null>(null);
 
   const [choices, setChoices] = useState<Choice[]>([]);
-  const [playerChoice, setPlayerChoice] = useState<number>();
+  // const [playerChoice, setPlayerChoice] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>();
 
@@ -71,16 +71,20 @@ export const useRPSLS = (): UseRPSLS => {
       }
 
       const data = (await response.json()) as Choice[];
-      setChoices(data);
+      const choicesWithEmojis = data.map((choice) => ({
+        ...choice,
+        emoji: getChoiceEmoji(choice.name),
+      }));
+      setChoices(choicesWithEmojis);
     } catch (err) {
       setError("Failed to fetch game choices");
       console.error("Error fetching choices:", err);
       setChoices([
-        { id: 1, name: "rock" },
-        { id: 2, name: "paper" },
-        { id: 3, name: "scissors" },
-        { id: 4, name: "lizard" },
-        { id: 5, name: "spock" },
+        { id: 1, name: "rock", emoji: "🪨" },
+        { id: 2, name: "paper", emoji: "📄" },
+        { id: 3, name: "scissors", emoji: "✂️" },
+        { id: 4, name: "lizard", emoji: "🦎" },
+        { id: 5, name: "spock", emoji: "🖖" },
       ]);
     } finally {
       setLoading(false);
@@ -96,7 +100,6 @@ export const useRPSLS = (): UseRPSLS => {
       try {
         setLoading(true);
         setError(null);
-        setPlayerChoice(choiceId);
 
         const response = await fetch("https://codechallenge.boohma.com/play", {
           method: "POST",
@@ -152,6 +155,8 @@ export const useRPSLS = (): UseRPSLS => {
     choices,
     resetScore,
     playGame,
+    loading,
+    error,
     refetchChoices: fetchChoices,
   };
 };
