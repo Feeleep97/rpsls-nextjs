@@ -71,10 +71,7 @@ export default function Home() {
                         : "cursor-pointer"
                     }`}
                   >
-                    <div className="text-3xl mb-2">
-                      {/* {getChoiceEmoji(choice.name)} */}
-                      emoji
-                    </div>
+                    <div className="text-3xl mb-2">{choice.emoji}</div>
                     <div className="font-semibold text-gray-700 capitalize">
                       {choice.name}
                     </div>
