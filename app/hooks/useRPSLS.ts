@@ -13,7 +13,6 @@ export const useRPSLS = (): UseRPSLS => {
   const [gameResult, setGameResult] = useState<GameResultRemaped | null>(null);
   const [gameHistory, setGameHistory] = useState<GameHistory[]>([]);
   const [choices, setChoices] = useState<Choice[]>([]);
-  // const [playerChoice, setPlayerChoice] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>();
 

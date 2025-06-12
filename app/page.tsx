@@ -30,12 +30,12 @@ export default function Home() {
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+          <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg shadow-lg">
             <div className="flex justify-between items-center">
               <span>{error}</span>
               <button
                 onClick={refetchChoices}
-                className="ml-4 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                className="ml-4 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors shadow-md hover:shadow-lg"
               >
                 Retry
               </button>
@@ -44,7 +44,7 @@ export default function Home() {
         )}
 
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl shadow-2xl p-6">
+          <div className="bg-white rounded-xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
               Choose Your Weapon
             </h2>
@@ -63,10 +63,10 @@ export default function Home() {
                     key={choice.id}
                     onClick={() => playGame(choice.id)}
                     disabled={loading}
-                    className={`p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+                    className={`p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl ${
                       playerScore === choice.id
-                        ? "border-purple-500 bg-purple-50"
-                        : "border-gray-200 bg-gray-50 hover:border-purple-300 hover:bg-purple-50"
+                        ? "border-purple-500 bg-purple-50 shadow-purple-200"
+                        : "border-gray-200 bg-gray-50 hover:border-purple-300 hover:bg-purple-50 hover:shadow-purple-100"
                     } ${
                       loading
                         ? "opacity-50 cursor-not-allowed"
@@ -83,7 +83,7 @@ export default function Home() {
             )}
 
             {gameResult && (
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg text-center">
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg text-center shadow-inner">
                 <div
                   className={`text-2xl font-bold mb-2 ${gameResult.resultColor}`}
                 >
@@ -103,7 +103,7 @@ export default function Home() {
                 </div>
                 <button
                   onClick={resetScore}
-                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   Play Again
                 </button>
@@ -111,13 +111,13 @@ export default function Home() {
             )}
           </div>
 
-          <div className="bg-white rounded-xl shadow-2xl p-6">
+          <div className="bg-white rounded-xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-gray-800">Game History</h2>
               {gameHistory.length > 0 && (
                 <button
                   onClick={clearHistory}
-                  className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                  className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600 transition-all duration-200 shadow-md hover:shadow-lg"
                 >
                   Clear
                 </button>
@@ -133,11 +133,11 @@ export default function Home() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3 max-h-[540px] overflow-y-auto">
+              <div className="space-y-3 max-h-[500px] overflow-y-auto">
                 {gameHistory.map((game) => (
                   <div
                     key={game.id}
-                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
                   >
                     <div className="flex items-center space-x-4">
                       <div className="text-center">
@@ -170,6 +170,31 @@ export default function Home() {
                 ))}
               </div>
             )}
+          </div>
+        </div>
+
+        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white shadow-2xl border border-white/20">
+          <h3 className="text-xl font-bold mb-3">Game Rules:</h3>
+          <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <div className="space-y-2">
+              <p className="p-2 rounded-lg bg-white/5 shadow-inner">
+                🪨 <strong>Rock</strong> crushes Scissors & Lizard
+              </p>
+              <p className="p-2 rounded-lg bg-white/5 shadow-inner">
+                📄 <strong>Paper</strong> covers Rock & disproves Spock
+              </p>
+              <p className="p-2 rounded-lg bg-white/5 shadow-inner">
+                ✂️ <strong>Scissors</strong> cuts Paper & decapitates Lizard
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="p-2 rounded-lg bg-white/5 shadow-inner">
+                🦎 <strong>Lizard</strong> eats Paper & poisons Spock
+              </p>
+              <p className="p-2 rounded-lg bg-white/5 shadow-inner">
+                🖖 <strong>Spock</strong> vaporizes Rock & smashes Scissors
+              </p>
+            </div>
           </div>
         </div>
       </div>
