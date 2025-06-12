@@ -13,6 +13,7 @@ export type UseRPSLS = {
 export type Choice = {
   id: number;
   name: string;
+  emoji: any;
 };
 
 export type GameResultAPIResponse = {
