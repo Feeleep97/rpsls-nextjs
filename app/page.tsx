@@ -6,7 +6,6 @@ import { useRPSLS } from "./hooks/useRPSLS";
 export default function Home() {
   const {
     playerScore,
-    computerScore,
     gameResult,
     resetScore,
     choices,
@@ -15,34 +14,6 @@ export default function Home() {
     error,
     refetchChoices,
   } = useRPSLS();
-
-  const getResultColor = (result) => {
-    console.log("result", result);
-    switch (result) {
-      case "win":
-        return "text-green-600";
-      case "lose":
-        return "text-red-600";
-      case "tie":
-        return "text-yellow-600";
-      default:
-        return "text-gray-600";
-    }
-  };
-
-  const getResultMessage = (result) => {
-    console.log(result, "get result message");
-    switch (result) {
-      case "win":
-        return "🎉 You Won!";
-      case "lose":
-        return "😞 You Lost!";
-      case "tie":
-        return "🤝 It's a Tie!";
-      default:
-        return "";
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-teal-600 p-4">
@@ -115,16 +86,14 @@ export default function Home() {
             {gameResult && (
               <div className="mt-6 p-4 bg-gray-50 rounded-lg text-center">
                 <div
-                  className={`text-2xl font-bold mb-2 ${getResultColor(
-                    gameResult.results
-                  )}`}
+                  className={`text-2xl font-bold mb-2 ${gameResult.resultColor}`}
                 >
-                  {getResultMessage(gameResult.results)}
+                  {gameResult.resultMessage}
                 </div>
                 <div className="text-gray-600 mb-2">
                   You played: {gameResult.playerEmoji}
                   <span className="font-semibold capitalize ml-1">
-                    {choices.find((c) => c.id === playerScore)?.name}
+                    {gameResult.playerChoiceName}
                   </span>
                 </div>
                 <div className="text-gray-600 mb-4">

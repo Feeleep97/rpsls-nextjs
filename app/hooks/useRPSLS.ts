@@ -22,6 +22,44 @@ export const useRPSLS = (): UseRPSLS => {
     setGameResult(null);
   };
 
+  const getResultColor = (result: string) => {
+    switch (result) {
+      case "win":
+        return "text-green-600";
+      case "lose":
+        return "text-red-600";
+      case "tie":
+        return "text-yellow-600";
+      default:
+        return "text-gray-600";
+    }
+  };
+
+  const getResultMessage = (result: string) => {
+    switch (result) {
+      case "win":
+        return "🎉 You Won!";
+      case "lose":
+        return "😞 You Lost!";
+      case "tie":
+        return "🤝 It's a Tie!";
+      default:
+        return "";
+    }
+  };
+
+  const getChoiceEmoji = (choiceName: string) => {
+    console.log(choiceName, "choice name");
+    const emojiMap = {
+      rock: "🪨",
+      paper: "📄",
+      scissors: "✂️",
+      lizard: "🦎",
+      spock: "🖖",
+    };
+    return emojiMap[choiceName?.toLowerCase()] || "❓";
+  };
+
   const fetchChoices = useCallback(async () => {
     try {
       setLoading(true);
@@ -32,7 +70,7 @@ export const useRPSLS = (): UseRPSLS => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as Choice[];
       setChoices(data);
     } catch (err) {
       setError("Failed to fetch game choices");
@@ -52,18 +90,6 @@ export const useRPSLS = (): UseRPSLS => {
   useEffect(() => {
     fetchChoices();
   }, [fetchChoices]);
-
-  const getChoiceEmoji = (choiceName: string) => {
-    console.log(choiceName, "choice name");
-    const emojiMap = {
-      rock: "🪨",
-      paper: "📄",
-      scissors: "✂️",
-      lizard: "🦎",
-      spock: "🖖",
-    };
-    return emojiMap[choiceName?.toLowerCase()] || "❓";
-  };
 
   const playGame = useCallback(
     async (choiceId: number) => {
@@ -95,12 +121,17 @@ export const useRPSLS = (): UseRPSLS => {
         const playerEmoji = getChoiceEmoji(playerChoiceName);
         const computerEmoji = getChoiceEmoji(computerChoiceName);
 
+        const resultMessage = getResultMessage(result.results);
+        const resultColor = getResultColor(result.results);
+
         const gameData = {
           ...result,
           playerChoiceName,
           computerChoiceName,
           playerEmoji,
           computerEmoji,
+          resultMessage,
+          resultColor,
         };
 
         setGameResult(gameData);

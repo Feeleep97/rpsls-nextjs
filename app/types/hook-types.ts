@@ -1,7 +1,7 @@
 export type UseRPSLS = {
   playerScore: number;
   computerScore: number;
-  gameResult: GameResultRemaped;
+  gameResult: GameResultRemaped | null;
   choices: Choice[];
   playGame: (choice: number) => void;
   resetScore: () => void;
@@ -29,4 +29,6 @@ export type GameResultRemaped = {
   computer: number;
   player: number;
   results: string;
+  resultMessage: string;
+  resultColor: string;
 };
