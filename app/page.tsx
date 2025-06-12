@@ -43,7 +43,7 @@ export default function Home() {
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl shadow-2xl p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
               Choose Your Weapon
@@ -110,61 +110,68 @@ export default function Home() {
               </div>
             )}
           </div>
-        </div>
-      </div>
-      <div className="bg-white rounded-xl shadow-2xl p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-800">Game History</h2>
-          {gameHistory.length > 0 && (
-            <button
-              onClick={clearHistory}
-              className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
-            >
-              Clear
-            </button>
-          )}
-        </div>
 
-        {gameHistory.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            <div className="text-4xl mb-2">🎮</div>
-            <p>No games played yet!</p>
-            <p className="text-sm">Start playing to see your history here.</p>
-          </div>
-        ) : (
-          <div className="space-y-3 max-h-96 overflow-y-auto">
-            {gameHistory.map((game) => (
-              <div
-                key={game.id}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="text-center">
-                    <div className="text-sm text-gray-500 mb-1">You</div>
-                    <div className="text-2xl mb-1">{game.playerEmoji}</div>
-                    <div className="text-xs font-semibold capitalize text-blue-600">
-                      {game.playerChoice}
-                    </div>
-                  </div>
-                  <div className="text-gray-400 text-sm">vs</div>
-                  <div className="text-center">
-                    <div className="text-sm text-gray-500 mb-1">AI</div>
-                    <div className="text-2xl mb-1">{game.computerEmoji}</div>
-                    <div className="text-xs font-semibold capitalize text-red-600">
-                      {game.computerChoice}
-                    </div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className={`font-bold ${game.resultColor}`}>
-                    {game.result.toUpperCase()}
-                  </div>
-                  <div className="text-xs text-gray-500">{game.timestamp}</div>
-                </div>
+          <div className="bg-white rounded-xl shadow-2xl p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800">Game History</h2>
+              {gameHistory.length > 0 && (
+                <button
+                  onClick={clearHistory}
+                  className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+
+            {gameHistory.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                <div className="text-4xl mb-2">🎮</div>
+                <p>No games played yet!</p>
+                <p className="text-sm">
+                  Start playing to see your history here.
+                </p>
               </div>
-            ))}
+            ) : (
+              <div className="space-y-3 max-h-[540px] overflow-y-auto">
+                {gameHistory.map((game) => (
+                  <div
+                    key={game.id}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="text-center">
+                        <div className="text-sm text-gray-500 mb-1">You</div>
+                        <div className="text-2xl mb-1">{game.playerEmoji}</div>
+                        <div className="text-xs font-semibold capitalize text-blue-600">
+                          {game.playerChoice}
+                        </div>
+                      </div>
+                      <div className="text-gray-400 text-sm">vs</div>
+                      <div className="text-center">
+                        <div className="text-sm text-gray-500 mb-1">AI</div>
+                        <div className="text-2xl mb-1">
+                          {game.computerEmoji}
+                        </div>
+                        <div className="text-xs font-semibold capitalize text-red-600">
+                          {game.computerChoice}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className={`font-bold ${game.resultColor}`}>
+                        {game.result.toUpperCase()}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {game.timestamp}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
