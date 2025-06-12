@@ -3,9 +3,11 @@ export type UseRPSLS = {
   computerScore: number;
   gameResult: GameResultRemaped | null;
   choices: Choice[];
+  gameHistory: GameHistory[];
   playGame: (choice: number) => void;
   resetScore: () => void;
   refetchChoices: () => void;
+  clearHistory: () => void;
   loading?: boolean;
   error?: string | null;
 };
@@ -32,4 +34,15 @@ export type GameResultRemaped = {
   results: string;
   resultMessage: string;
   resultColor: string;
+};
+
+export type GameHistory = {
+  id: number;
+  playerChoice: string;
+  computerChoice: string;
+  playerEmoji: string;
+  computerEmoji: string;
+  result: string;
+  resultColor: string;
+  timestamp: string;
 };

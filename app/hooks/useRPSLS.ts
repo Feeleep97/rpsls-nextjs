@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   Choice,
+  GameHistory,
   GameResultAPIResponse,
   GameResultRemaped,
   UseRPSLS,
@@ -10,7 +11,7 @@ export const useRPSLS = (): UseRPSLS => {
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
   const [gameResult, setGameResult] = useState<GameResultRemaped | null>(null);
-
+  const [gameHistory, setGameHistory] = useState<GameHistory[]>([]);
   const [choices, setChoices] = useState<Choice[]>([]);
   // const [playerChoice, setPlayerChoice] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -138,6 +139,19 @@ export const useRPSLS = (): UseRPSLS => {
         };
 
         setGameResult(gameData);
+
+        const gameRecord = {
+          id: Date.now(),
+          playerChoice: playerChoiceName,
+          computerChoice: computerChoiceName,
+          playerEmoji,
+          computerEmoji,
+          result: result.results,
+          resultColor,
+          timestamp: new Date().toLocaleTimeString(),
+        } as GameHistory;
+
+        setGameHistory((prev) => [gameRecord, ...(prev || []).slice(0, 9)]);
       } catch (err) {
         setError("Failed to play game");
         console.error("Error playing game:", err);
@@ -148,6 +162,10 @@ export const useRPSLS = (): UseRPSLS => {
     [choices]
   );
 
+  const clearHistory = useCallback(() => {
+    setGameHistory([]);
+  }, []);
+
   return {
     playerScore,
     computerScore,
@@ -157,6 +175,8 @@ export const useRPSLS = (): UseRPSLS => {
     playGame,
     loading,
     error,
+    clearHistory,
+    gameHistory,
     refetchChoices: fetchChoices,
   };
 };
