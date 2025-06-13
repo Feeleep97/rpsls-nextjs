@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Challenge finished and submitted
 
-## Getting Started
+Code is located on main branch
 
-First, run the development server:
+I am submitting the task with key features implemented. I've focused on quality and making the user interface as intuitive as possible.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+There are some areas with potentional improvements:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Potential improvements:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Code spliting - for this challenge I've wrote all code in one file for quick development, this would be my first improvement.
+- Unit test - integrate unit tests to test out main functionalities.
+- E2E - integrate E2E test to cover happy path.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Prerequisites
 
-## Learn More
+Before running this project, please ensure you have the following installed on your system:
 
-To learn more about Next.js, take a look at the following resources:
+Node.js (version 18.18 or higher- mine was v22.2.0)
+npm (Node Package Manager, typically included with Node.js)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Steps to run the project
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- node --version (v18.18+ or v22.2.0)
+- npm install
+- npm run dev
+- Open [http://localhost:3000/] (http://localhost:3000/)
 
-## Deploy on Vercel
+# How to Play
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Choose your move by clicking on one of the available options: Rock, Paper, Scissors, Lizard, or Spock
+The computer will automatically make its choice
+The game will determine the winner based on the classic rules:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Rock crushes Scissors and Lizard
+Paper covers Rock and disproves Spock
+Scissors cuts Paper and decapitates Lizard
+Lizard eats Paper and poisons Spock
+Spock vaporizes Rock and smashes Scissors
+
+View your game history and track your progress against the computer
+
+<!-- #Enjoy! :) -->
