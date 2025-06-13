@@ -49,7 +49,6 @@ export const useRPSLS = (): UseRPSLS => {
   };
 
   const getChoiceEmoji = (choiceName: string) => {
-    console.log(choiceName, "choice name");
     const emojiMap = {
       rock: "🪨",
       paper: "📄",
@@ -57,7 +56,7 @@ export const useRPSLS = (): UseRPSLS => {
       lizard: "🦎",
       spock: "🖖",
     };
-    return emojiMap[choiceName?.toLowerCase()] || "❓";
+    return emojiMap[choiceName?.toLowerCase() as keyof typeof emojiMap] || "❓";
   };
 
   const fetchChoices = useCallback(async () => {
